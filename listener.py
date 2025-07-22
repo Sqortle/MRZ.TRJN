@@ -1,4 +1,5 @@
 import socket
+import simplejson as json
 
 
 class Listener:
@@ -12,12 +13,25 @@ class Listener:
 
         (self.link_1, address) = link.accept()
 
+    def packeting(self, data):
+        packet = json.dumps(data)
+        self.link_1.sendall(packet.encode("utf-8"))
+
+    def packet_decode(self):
+        incoming_data = ""
+        while True:
+            try:
+                incoming_data = incoming_data + self.link_1.recv(1024).decode("utf-8")
+                return json.loads(incoming_data)
+            except ValueError:
+                continue
+
     def start(self):
         while True:
             entrance = input("Write a command: ")
-            self.link_1.sendall(entrance.encode("utf-8"))
-            incoming_data = self.link_1.recv(1024).decode("utf-8")
-            print(incoming_data)
+            self.packeting(entrance)
+            output = self.packet_decode()
+            print(output)
 
 
 listener = Listener(ip="127.0.0.1", port=8080)
