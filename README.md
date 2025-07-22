@@ -19,7 +19,7 @@ This is a Python-based client-server application that simulates a basic reverse 
 This is a **learning tool** for understanding socket programming, basic command execution, and data encoding over network connections.
 
 ---
-
+ 
 ## 🚀 How It Works
 
 1. The **Listener** listens on a specified IP and port.
